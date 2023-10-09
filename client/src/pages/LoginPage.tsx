@@ -1,10 +1,12 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import { Navigate } from "react-router-dom";
+import { UserContext } from "../UserContaxt";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const {setUserInfo} = useContext(UserContext)
 
   const login = async (e: FormEvent) => {
     e.preventDefault();
@@ -15,7 +17,10 @@ export default function LoginPage() {
       credentials: "include",
     });
     if (response.ok) {
-      setRedirect(true)
+      response.json().then(userInfo => {
+        setUserInfo(userInfo)
+        setRedirect(true)
+      })
     } else {
       alert("wrong credentials!")
     }
