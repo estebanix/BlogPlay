@@ -5,12 +5,14 @@ const User = require("./models/User");
 const bcrypt = require("bcrypt");
 const app = express();
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const salt = bcrypt.genSaltSync(10);
 const secret = "asdafaglaksdglakgnagf";
 
-app.use(cors({credentials: true, origin:"http://localhost:5173"}));
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect(
   "mongodb+srv://blog:6bMF6qt2LJtD9Vku@cluster0.urrfuto.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp"
@@ -41,6 +43,19 @@ app.post("/login", async (req, res) => {
   } else {
     res.status(400).json("denied!");
   }
+});
+
+app.get("/profile", (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, secret, {}, (err, info) => {
+    if (err) throw err;
+    res.json(info);
+  });
+  res.json(req.cookies);
+});
+
+app.post("/logout", (req, res) => {
+  res.cookie("token", "").json("ok");
 });
 
 app.listen(4000);
