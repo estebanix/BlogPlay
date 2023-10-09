@@ -6,7 +6,7 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const {setUserInfo} = useContext(UserContext)
+  const { setUserInfo } = useContext(UserContext);
 
   const login = async (e: FormEvent) => {
     e.preventDefault();
@@ -17,17 +17,17 @@ export default function LoginPage() {
       credentials: "include",
     });
     if (response.ok) {
-      response.json().then(userInfo => {
-        setUserInfo(userInfo)
-        setRedirect(true)
-      })
+      response.json().then((userInfo) => {
+        setUserInfo(userInfo);
+        setRedirect(true);
+      });
     } else {
-      alert("wrong credentials!")
+      alert("wrong credentials!");
     }
   };
 
-  if(redirect){
-    return <Navigate to={"/"} />
+  if (redirect) {
+    return <Navigate to={"/"} />;
   }
   return (
     <form className="login" onSubmit={login}>
