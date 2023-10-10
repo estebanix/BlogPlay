@@ -135,3 +135,23 @@ div.post-page a {
 div.post-page, div.content p{
   line-height: 1.6rem;
 }
+
+div.edit-row{
+  text-align: center;
+  margin: 20px 0;
+}
+
+div.post-page a.edit{
+  background-color: #333;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+a svg {
+  height: 20px;
+}
